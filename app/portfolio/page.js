@@ -339,10 +339,11 @@ I have completed Integrated MSc (IMSc) in Maths and Computing at BIT Mesra.
   </div>
     )}
     {userId && (
-      <div className="flex items-center justify-center min-h-screen bg-gray-100">
+      <div className="flex items-center justify-center bg-gray-100">
         <div className="w-full max-w-4xl p-6 bg-<white rounded-lg shadow-md text-center">
-          <h2 className="text-2xl font-bold text-black mb-6">Congratulations your linkis ready</h2>
-          <a href={`http://localhost:3000/user/${userId}`} className="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700 transition"></a>
+          <h2 className="text-2xl font-bold text-black mb-6">Congratulations your link is ready</h2>
+          <a target="_blank" href={`https://portfoliotemp1.vercel.app/${userId}`} className="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700 transition">
+          Visit Now</a>
      </div>
   </div>
   )
