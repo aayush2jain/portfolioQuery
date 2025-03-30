@@ -344,6 +344,9 @@ I have completed Integrated MSc (IMSc) in Maths and Computing at BIT Mesra.
           <h2 className="text-2xl font-bold text-black mb-6">Congratulations your link is ready</h2>
           <a target="_blank" href={`https://portfoliotemp1.vercel.app/${userId}`} className="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700 transition">
           Visit Now</a>
+          <h2 className="text-2xl font-bold text-black mb-6">To edit you portfolio click on link below</h2>
+          <a target="_blank" href={`https://editportfolio.vercel.app/${userId}`} className="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700 transition">
+          Edit Now</a>
      </div>
   </div>
   )
