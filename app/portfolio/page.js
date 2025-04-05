@@ -2,6 +2,11 @@
 import React, { useState } from "react";
 import axios from "axios";
 const MultiStepForm = () => {
+  const predefinedSkills = [
+    "Github", "React", "NodeJs", "Javascript", "MongoDB",
+    "MySQL", "Html", "CSS", "C++", "Python"
+  ];
+
   const [step, setStep] = useState(1);
   const [loading, setLoading] = useState(false);
   const [userId,setuserId] = useState('');
@@ -16,6 +21,7 @@ const MultiStepForm = () => {
     instagram: "",
     pinterest: "",
     resume: "",
+    profileImage: "",
 
     // Professional Information
     profession: "",
@@ -25,7 +31,7 @@ const MultiStepForm = () => {
     about: "",
     hobbies: [""],
     roles: [""],
-
+    skillSet:[],
     // Projects
     projects: [
       {
@@ -36,6 +42,15 @@ const MultiStepForm = () => {
       },
     ],
   });
+  const handleSkillChange = (event) => {
+    const value = event.target.value;
+    setFormData((prev) => ({
+      ...prev,
+      skillSet: prev.skillSet.includes(value)
+        ? prev.skillSet.filter((skill) => skill !== value)
+        : [...prev.skillSet, value]
+    }));
+  };
 
   // Handles input changes for regular fields
   const handleChange = (e) => {
@@ -50,7 +65,13 @@ const MultiStepForm = () => {
     setFormData({ ...formData, [field]: updatedArray });
   };
   
-
+  const handleImageUpload = async (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      const imageUrl = await uploadImageToCloudinary(file);
+      setFormData({ ...formData, profileImage: imageUrl });
+    }
+  };
   // Add a new field dynamically for hobbies/roles
   const addField = (field) => {
     setFormData({ ...formData, [field]: [...formData[field], ""] });
@@ -155,8 +176,6 @@ const MultiStepForm = () => {
        <label className="block text-black font-medium mb-1">Github Profile:</label>
       <input className="w-full p-2 mb-3 border  text-black border-gray-300 rounded" name="github" placeholder="GitHub Profile Link" onChange={handleChange} />
 
-  
-
       <label className="block text-black font-medium mb-1">Twitter Profile:</label>
       <input className="w-full p-2 mb-3 border  text-black border-gray-300 rounded" name="twitter" placeholder="Twitter Profile Link" onChange={handleChange} />
 
@@ -170,7 +189,12 @@ const MultiStepForm = () => {
       <input className="w-full p-2 mb-3 text-black border border-gray-300 rounded" name="phone" required autoComplete="phone" placeholder="Enter your phone number" onChange={handleChange} />
       <label className="block text-black font-semibold mb-1">LinkedIn Profile:<span className="text-red-600">*</span></label>
       <input className="w-full p-2 mb-3 border text-black border-gray-300 rounded" name="linkedin" required autoComplete="linkedin" placeholder="LinkedIn Profile Link" onChange={handleChange} />
-     
+
+      <label className="block font-medium text-black">Profile Image</label>
+      <input type="file" onChange={handleImageUpload} className="w-full p-2 mb-3 border text-black border-gray-300 rounded text-black" />
+      {/* {formData.profileImage && (
+        <img src={formData.profileImage} alt="Profile Preview" className="w-24 h-24 mt-2 rounded-full" />
+      )} */}
       <label className="block text-black font-medium mb-1">Instagram Profile:</label>
       <input className="w-full p-2 mb-3 border text-black border-gray-300 rounded" name="instagram" placeholder="Instagram Profile Link" onChange={handleChange} />
 
@@ -320,6 +344,24 @@ I have completed Integrated MSc (IMSc) in Maths and Computing at BIT Mesra.
         + Add Project
       </button>
 
+
+      {/* skill section */}
+      <label className="block mb-2 text-2xl text-black text-center font-semibold">Skills</label>
+      <div className="grid text-black grid-cols-2 gap-2">
+        {predefinedSkills.map((skill) => (
+          <label key={skill} className="flex items-center space-x-2 p-2 border rounded-md cursor-pointer hover:bg-gray-100">
+            <input
+              type="checkbox"
+              value={skill}
+              checked={formData.skillSet.includes(skill)}
+              onChange={handleSkillChange}
+              className="form-checkbox text-blue-500"
+            />
+            <span>{skill}</span>
+          </label>
+        ))}
+      </div>
+
       <div className="flex justify-between mt-6">
             <button className="bg-gray-600 text-white px-6 py-2 rounded" onClick={prevStep}>
               Prev
@@ -352,7 +394,7 @@ I have completed Integrated MSc (IMSc) in Maths and Computing at BIT Mesra.
   )
 };
   </div>
-  );
+  )
 };
 
 export default MultiStepForm;
